@@ -10,14 +10,12 @@ def authenticate():
     permission_classes = [IsAuthenticated,]
 
 class UserViewSet(viewsets.ModelViewSet):
-    # authentication_classes = [JWTAuthentication,]
-    # permission_classes = [IsAuthenticated,]
     authenticate()
-
     queryset = User.objects.all().order_by('name')
     serializer_class = UserSerializer
 
 class PostViewSet(viewsets.ModelViewSet):
+    authenticate
     queryset = Post.objects.all().order_by('title')
     serializer_class = PostSerializer
 
