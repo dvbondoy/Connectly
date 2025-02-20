@@ -15,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
 
 class PostViewSet(viewsets.ModelViewSet):
-    authenticate
+    authenticate()
     queryset = Post.objects.all().order_by('title')
     serializer_class = PostSerializer
 
