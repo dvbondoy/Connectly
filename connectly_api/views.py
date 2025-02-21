@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 from .models import User, Post, Comment
-from .serializers import UserSerializer, PostSerializer, CommentSerializer
+from .serializers import UserSerializer, PostSerializer, CommentSerializer, LikeSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -23,5 +23,10 @@ class CommentViewSet(viewsets.ModelViewSet):
     authenticate()
     queryset = Comment.objects.all().order_by('created_at')
     serializer_class = CommentSerializer
+
+class LikeViewSet(viewsets.ModelViewSet):
+    authenticate()
+    queryset = Like.objects.all().order_by('created_at')
+    serializer_class = LikeSerializer
 
 # Create your views here.
