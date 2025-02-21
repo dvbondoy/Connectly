@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .models import User, Post, Comment
+from .models import User, Post, Comment, Like
 from .serializers import UserSerializer, PostSerializer, CommentSerializer, LikeSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
