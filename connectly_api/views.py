@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .models import User, Post, Comment, Like
-from .serializers import UserSerializer, PostSerializer, CommentSerializer, LikeSerializer
+from .models import User, Post, Comment, Like, Feed
+from .serializers import UserSerializer, PostSerializer, CommentSerializer, LikeSerializer, FeedSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
@@ -52,5 +52,9 @@ class LikeViewSet(viewsets.ModelViewSet):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
   
+class FeedViewSet(viewsets.ModelViewSet):
+    authenticate()
+    queryset = Feed.objects.all().order_by('created_at')
+    serializer_class = FeedSerializer
     
 # Create your views here.

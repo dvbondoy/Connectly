@@ -39,3 +39,12 @@ class Like(models.Model):
 
     def __str__(self):
         return f"Like by {self.user.name} on Post {self.post.id}"
+
+class Feed(models.Model):
+    user = models.ForeignKey(User, related_name='feeds', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='feeds', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Feed by {self.user.name} on Post {self.post.id}"
