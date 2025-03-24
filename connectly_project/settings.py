@@ -168,7 +168,9 @@ SIMPLE_JWT = {
 
 # Django allauth config
 SITE_ID = 1
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'#none
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+# ACCOUNT_EMAIL_VERIFICATION = 'mandatory'#none
+# ACCOUNT_EMAIL_REQUIRED = True
+# ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

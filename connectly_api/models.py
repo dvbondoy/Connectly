@@ -40,6 +40,7 @@ class Like(models.Model):
     def __str__(self):
         return f"Like by {self.user.name} on Post {self.post.id}"
 
+# implement feed pagination
 class Feed(models.Model):
     user = models.ForeignKey(User, related_name='feeds', on_delete=models.CASCADE)
     post = models.ForeignKey(Post, related_name='feeds', on_delete=models.CASCADE)

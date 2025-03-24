@@ -5,6 +5,8 @@ from .models import User, Post, Comment, Like, Feed
 from .serializers import UserSerializer, PostSerializer, CommentSerializer, LikeSerializer, FeedSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import ListAPIView
 
 def authenticate():
     authentication_classes = [JWTAuthentication,]
@@ -51,10 +53,18 @@ class LikeViewSet(viewsets.ModelViewSet):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class FeedCustomPagination(PageNumberPagination):
+    authenticate()
+    page_size = 2
+    page_size_query_param = 'page_size'
+    max_page_size = 10
+
   
 class FeedViewSet(viewsets.ModelViewSet):
     authenticate()
-    queryset = Feed.objects.all().order_by('created_at')
+    queryset = Feed.objects.all()
     serializer_class = FeedSerializer
+    pagination_class = FeedCustomPagination  # Use custom pagination
     
 # Create your views here.
