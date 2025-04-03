@@ -7,6 +7,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.generics import ListAPIView
+from django.db.models import Q
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 def authenticate():
     authentication_classes = [JWTAuthentication,]
@@ -19,8 +21,30 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class PostViewSet(viewsets.ModelViewSet):
     authenticate()
-    queryset = Post.objects.all().order_by('title')
+
     serializer_class = PostSerializer
+    # queryset = Post.objects.all()
+
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        user = self.request.user
+        user_id = self.request.user.id
+        if user.is_authenticated:
+            return Post.objects.filter(Q(author=user_id) | Q(private=False))
+            # return Post.objects.filter(private=False) | Post.objects.filter(author=user_id)
+        return Post.objects.filter(private=False)
+    
+    def create(self, request):
+        serializer = PostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    # def list(self, request):
+    #     return Post.objects.all()
+        # serializer = PostSerializer(queryset, many=True)
+        # return Response(serializer.data)
 
 class CommentViewSet(viewsets.ModelViewSet):
     authenticate()
